@@ -1,7 +1,5 @@
 package example.com.paycoinqtest.api;
 
-import android.support.annotation.Nullable;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -36,6 +34,7 @@ public class ApiManager {
 
 	/**
 	 * This constructor should be used in unit tests to inject mock server responses
+	 *
 	 * @param mockInterceptor interceptor that will return mock data
 	 */
 	ApiManager(Interceptor mockInterceptor) {
@@ -51,7 +50,7 @@ public class ApiManager {
 		gitHubApi = retrofit.create(GitHubApi.class);
 	}
 
-	public void getReposPage(int pageNumber, Callback<List<RepoInfo>> callback){
+	public void getReposPage(int pageNumber, Callback<List<RepoInfo>> callback) {
 		gitHubApi.getWeatherInfo(pageNumber, ITEMS_PER_PAGE).enqueue(callback);
 	}
 

@@ -11,7 +11,6 @@ public class PaycoinqApp extends Application {
 
 	public PaycoinqApp() {
 		apiManager = new ApiManager();
-//		Realm.init(this);
 	}
 
 	public ApiManager getApiManager() {

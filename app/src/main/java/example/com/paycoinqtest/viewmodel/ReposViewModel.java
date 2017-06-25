@@ -4,6 +4,7 @@ package example.com.paycoinqtest.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ public class ReposViewModel extends AndroidViewModel {
 		return data;
 	}
 
-	public void loadNextPage(LoadingFinishedListener listener) {
+	public void loadNextPage(@Nullable LoadingFinishedListener listener) {
 		if (!allDataLoaded) {
 			apiManager.getReposPage(++LAST_LOADED_PAGE, new DataCallback(listener));
 			loading = true;
@@ -57,25 +58,28 @@ public class ReposViewModel extends AndroidViewModel {
 
 	public interface LoadingFinishedListener {
 		/**
-		 * Do cleanup here if needed
+		 * You can do cleanup here if needed
 		 */
 		void onLoadingFinished();
 	}
 
 	private class DataCallback implements Callback<List<RepoInfo>> {
+		@Nullable
 		private LoadingFinishedListener listener;
 
-		public DataCallback(LoadingFinishedListener listener) {
+		public DataCallback(@Nullable LoadingFinishedListener listener) {
 			this.listener = listener;
 		}
 
 		@Override
 		public void onResponse(Call<List<RepoInfo>> call, Response<List<RepoInfo>> response) {
 			loading = false;
-			listener.onLoadingFinished();
+			if (listener != null) {
+				listener.onLoadingFinished();
+			}
 			List<RepoInfo> items = response.body();
 			if (items == null || items.isEmpty()) {
-				Toast.makeText(getApplication(), "No more data to load", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplication(), R.string.all_data_loaded, Toast.LENGTH_SHORT).show();
 				allDataLoaded = true;
 				return;
 			}
@@ -90,13 +94,16 @@ public class ReposViewModel extends AndroidViewModel {
 				}
 			}
 			PreferencesManager.saveLoadedPage(getApplication(), LAST_LOADED_PAGE);
-			Toast.makeText(getApplication(), "Page " + LAST_LOADED_PAGE + " loaded", Toast.LENGTH_SHORT).show();
+			String pageLoadedMessage = getApplication().getResources().getString(R.string.page_loaded, LAST_LOADED_PAGE);
+			Toast.makeText(getApplication(), pageLoadedMessage, Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
 		public void onFailure(Call<List<RepoInfo>> call, Throwable t) {
 			loading = false;
-			listener.onLoadingFinished();
+			if (listener != null) {
+				listener.onLoadingFinished();
+			}
 			Log.e(MainActivity.class.getName(), "Network error", t);
 			Toast.makeText(getApplication(), R.string.network_error, Toast.LENGTH_LONG).show();
 		}
