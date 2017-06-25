@@ -1,5 +1,8 @@
 package example.com.paycoinqtest.api;
 
+import android.support.annotation.Nullable;
+
+import java.io.IOException;
 import java.util.List;
 
 import example.com.paycoinqtest.Constants;
@@ -7,6 +10,7 @@ import example.com.paycoinqtest.data.RepoInfo;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -16,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiManager {
 	private GitHubApi gitHubApi;
 	private static final String TAG = ApiManager.class.getName();
-	private static final int ITEMS_PER_PAGE = 15;
+	public static final int ITEMS_PER_PAGE = 15;
 
 	public ApiManager() {
 		OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
@@ -49,6 +53,10 @@ public class ApiManager {
 
 	public void getReposPage(int pageNumber, Callback<List<RepoInfo>> callback){
 		gitHubApi.getWeatherInfo(pageNumber, ITEMS_PER_PAGE).enqueue(callback);
+	}
+
+	Response<List<RepoInfo>> getReposPage(int pageNumber) throws IOException {
+		return gitHubApi.getWeatherInfo(pageNumber, ITEMS_PER_PAGE).execute();
 	}
 
 }

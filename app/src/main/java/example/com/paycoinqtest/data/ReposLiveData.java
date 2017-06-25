@@ -11,6 +11,7 @@ import io.realm.RealmResults;
 
 public class ReposLiveData extends LiveData<List<RepoInfo>> {
 	private RealmResults<RepoInfo> targetData;
+	private Realm realm;
 
 	public ReposLiveData(Context context) {
 		Realm.init(context);
@@ -19,12 +20,17 @@ public class ReposLiveData extends LiveData<List<RepoInfo>> {
 
 	@Override
 	protected void onActive() {
+		if (realm == null) {
+			realm = Realm.getDefaultInstance();
+		}
 		targetData.addChangeListener((results, changeSet) -> setValue(targetData));
 	}
 
 	@Override
 	protected void onInactive() {
 		targetData.removeAllChangeListeners();
+		realm.close();
+		realm = null;
 	}
 
 	private void loadData() {

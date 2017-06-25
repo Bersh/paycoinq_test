@@ -68,13 +68,14 @@ public class ReposViewModel extends AndroidViewModel {
 				return;
 			}
 
-			Realm realm = Realm.getDefaultInstance();
-			realm.beginTransaction();
+			Realm realm = null;
 			try {
-				realm.insertOrUpdate(response.body());
-				realm.commitTransaction();
-			} catch (Exception e) {
-				realm.cancelTransaction();
+				realm = Realm.getDefaultInstance();
+				realm.executeTransaction(realm1 -> realm1.insertOrUpdate(response.body()));
+			} finally {
+				if(realm != null) {
+					realm.close();
+				}
 			}
 			PreferencesManager.saveLoadedPage(getApplication(), LAST_LOADED_PAGE);
 			Toast.makeText(getApplication(), "Page " + LAST_LOADED_PAGE + " loaded", Toast.LENGTH_SHORT).show();
