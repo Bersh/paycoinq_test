@@ -1,8 +1,14 @@
-package example.com.paycoinqtest.model;
+package example.com.paycoinqtest.data;
 
 
-public class RepoInfo {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
+
+public class RepoInfo extends RealmObject {
+	@PrimaryKey
 	private int id;
+	@Required
 	private String name;
 
 	public int getId() {

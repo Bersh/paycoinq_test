@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example.com.paycoinqtest.R;
-import example.com.paycoinqtest.model.RepoInfo;
+import example.com.paycoinqtest.data.RepoInfo;
 
 public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	//item types
@@ -73,11 +73,18 @@ public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 	}
 
 	public void addProgressFooter() {
+		if (isFooterAdded) {
+			return;
+		}
+
 		isFooterAdded = true;
 		add(new RepoInfo());
 	}
 
 	public void removeProgressFooter() {
+		if (!isFooterAdded) {
+			return;
+		}
 		isFooterAdded = false;
 
 		int position = data.size() - 1;
@@ -107,10 +114,9 @@ public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 		notifyItemInserted(data.size() - 1);
 	}
 
-	public void addAll(@NonNull List<RepoInfo> newItems) {
-		int positionStart = data.size() - 1;
-		data.addAll(newItems);
-		notifyItemRangeInserted(positionStart, newItems.size());
+	public void setData(@NonNull List<RepoInfo> items) {
+		data = new ArrayList<>(items);
+		notifyDataSetChanged();
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package example.com.paycoinqtest.api;
 
 import java.util.List;
 
-import example.com.paycoinqtest.model.RepoInfo;
+import example.com.paycoinqtest.data.RepoInfo;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

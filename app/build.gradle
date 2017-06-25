@@ -1,4 +1,21 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.6.1'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -17,9 +34,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 def androidSupportVersion = "25.3.1"
+def archComponentsVersion = "1.0.0-alpha3"
 
 dependencies {
     compile "com.android.support:appcompat-v7:${androidSupportVersion}"
@@ -31,6 +54,10 @@ dependencies {
     compile "com.android.support:cardview-v7:${androidSupportVersion}"
     compile "com.android.support:recyclerview-v7:${androidSupportVersion}"
     compile "com.android.support:palette-v7:${androidSupportVersion}"
+
+    compile "android.arch.lifecycle:runtime:${archComponentsVersion}"
+    compile "android.arch.lifecycle:extensions:${archComponentsVersion}"
+    annotationProcessor "android.arch.lifecycle:compiler:${archComponentsVersion}"
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.3.2"
