@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PaycoinqTest</string>
+
+    <string name="network_error">Network error. Check logs</string>
+</resources>
