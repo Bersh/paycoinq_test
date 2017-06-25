@@ -1,13 +1,11 @@
 package example.com.paycoinqtest.adapter;
 
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,31 +14,103 @@ import java.util.List;
 import example.com.paycoinqtest.R;
 import example.com.paycoinqtest.model.RepoInfo;
 
-public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> {
-	private List<RepoInfo> data = new ArrayList<>();
-	private Context context;
+public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+	//item types
+	private static final int ITEM = 1;
+	private static final int FOOTER = 2;
 
-	public ReposAdapter(@NonNull Context context, @NonNull List<RepoInfo> data) {
+	private List<RepoInfo> data = new ArrayList<>();
+	private boolean isFooterAdded = false;
+
+	public ReposAdapter(@NonNull List<RepoInfo> data) {
 		this.data = data;
-		this.context = context;
 	}
 
 	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		RecyclerView.ViewHolder viewHolder = null;
+
+		switch (viewType) {
+			case ITEM:
+				viewHolder = createItemViewHolder(parent);
+				break;
+			case FOOTER:
+				viewHolder = createFooterViewHolder(parent);
+				break;
+			default:
+				break;
+		}
+
+		return viewHolder;
+	}
+
+	private ItemViewHolder createItemViewHolder(ViewGroup parent) {
 		View view = LayoutInflater.from(parent.getContext())
 				.inflate(R.layout.list_item, parent, false);
 		TextView txtName = (TextView) view.findViewById(R.id.txt_name);
 
-		return new ViewHolder(view, txtName);
+		return new ItemViewHolder(view, txtName);
+	}
+
+	private FooterViewHolder createFooterViewHolder(ViewGroup parent) {
+		View view = LayoutInflater.from(parent.getContext())
+				.inflate(R.layout.list_item_progress, parent, false);
+
+		return new FooterViewHolder(view);
 	}
 
 	@Override
-	public void onBindViewHolder(final ViewHolder holder, int position) {
+	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+		switch (getItemViewType(position)) {
+			case ITEM:
+				((ItemViewHolder) holder).txtName.setText(data.get(position).getName());
+				break;
+			case FOOTER:
+				break;
+			default:
+				break;
+		}
 	}
 
-	public void add(RepoInfo newItem) {
-		data.add(newItem);
-		notifyDataSetChanged();
+	public void addProgressFooter() {
+		isFooterAdded = true;
+		add(new RepoInfo());
+	}
+
+	public void removeProgressFooter() {
+		isFooterAdded = false;
+
+		int position = data.size() - 1;
+		RepoInfo item = getItem(position);
+
+		if (item != null) {
+			data.remove(position);
+			notifyItemRemoved(position);
+		}
+	}
+
+	private RepoInfo getItem(int position) {
+		return data.get(position);
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		return (isLastPosition(position) && isFooterAdded) ? FOOTER : ITEM;
+	}
+
+	private boolean isLastPosition(int position) {
+		return (position == data.size() - 1);
+	}
+
+	public void add(@NonNull RepoInfo item) {
+		data.add(item);
+		notifyItemInserted(data.size() - 1);
+	}
+
+	public void addAll(@NonNull List<RepoInfo> newItems) {
+		int positionStart = data.size() - 1;
+		data.addAll(newItems);
+		notifyItemRangeInserted(positionStart, newItems.size());
 	}
 
 	@Override
@@ -48,12 +118,19 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
 		return data.size();
 	}
 
-	static class ViewHolder extends RecyclerView.ViewHolder {
+	private static class ItemViewHolder extends RecyclerView.ViewHolder {
 		TextView txtName;
 
-		ViewHolder(View itemView, TextView txtName) {
+		ItemViewHolder(View itemView, TextView txtName) {
 			super(itemView);
 			this.txtName = txtName;
+		}
+	}
+
+	private static class FooterViewHolder extends RecyclerView.ViewHolder {
+
+		FooterViewHolder(View itemView) {
+			super(itemView);
 		}
 	}
 }
