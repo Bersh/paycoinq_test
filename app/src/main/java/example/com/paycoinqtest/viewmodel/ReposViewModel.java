@@ -40,9 +40,9 @@ public class ReposViewModel extends AndroidViewModel {
 		return data;
 	}
 
-	public void loadNextPage() {
+	public void loadNextPage(LoadingFinishedListener listener) {
 		if (!allDataLoaded) {
-			apiManager.getReposPage(++LAST_LOADED_PAGE, new DataCallback());
+			apiManager.getReposPage(++LAST_LOADED_PAGE, new DataCallback(listener));
 			loading = true;
 		}
 	}
@@ -55,11 +55,24 @@ public class ReposViewModel extends AndroidViewModel {
 		return loading;
 	}
 
+	public interface LoadingFinishedListener {
+		/**
+		 * Do cleanup here if needed
+		 */
+		void onLoadingFinished();
+	}
+
 	private class DataCallback implements Callback<List<RepoInfo>> {
+		private LoadingFinishedListener listener;
+
+		public DataCallback(LoadingFinishedListener listener) {
+			this.listener = listener;
+		}
 
 		@Override
 		public void onResponse(Call<List<RepoInfo>> call, Response<List<RepoInfo>> response) {
 			loading = false;
+			listener.onLoadingFinished();
 			List<RepoInfo> items = response.body();
 			if (items == null || items.isEmpty()) {
 				Toast.makeText(getApplication(), "No more data to load", Toast.LENGTH_SHORT).show();
@@ -83,6 +96,7 @@ public class ReposViewModel extends AndroidViewModel {
 		@Override
 		public void onFailure(Call<List<RepoInfo>> call, Throwable t) {
 			loading = false;
+			listener.onLoadingFinished();
 			Log.e(MainActivity.class.getName(), "Network error", t);
 			Toast.makeText(getApplication(), R.string.network_error, Toast.LENGTH_LONG).show();
 		}

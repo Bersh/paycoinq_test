@@ -16,7 +16,7 @@ import example.com.paycoinqtest.adapter.ReposAdapter;
 import example.com.paycoinqtest.data.RepoInfo;
 import example.com.paycoinqtest.viewmodel.ReposViewModel;
 
-public class MainActivity extends LifecycleActivity {
+public class MainActivity extends LifecycleActivity implements ReposViewModel.LoadingFinishedListener {
 	private static final int LOAD_MORE_TRESHOLD = 3;
 
 	private ProgressBar progressBar;
@@ -50,7 +50,7 @@ public class MainActivity extends LifecycleActivity {
 		List<RepoInfo> dataFromDb = model.getData().getValue();
 		if (dataFromDb == null || dataFromDb.isEmpty()) {
 			dataFromDb = new ArrayList<>();
-			model.loadNextPage();
+			model.loadNextPage(this);
 		}
 		reposAdapter = new ReposAdapter(dataFromDb);
 		recyclerRepos.setAdapter(reposAdapter);
@@ -68,11 +68,18 @@ public class MainActivity extends LifecycleActivity {
 					int totalItemCount = layoutManager.getItemCount();
 					int lastItem = layoutManager.findLastVisibleItemPosition();
 					if (lastItem >= totalItemCount - LOAD_MORE_TRESHOLD) {
-						model.loadNextPage();
+						model.loadNextPage(MainActivity.this);
 						reposAdapter.addProgressFooter();
 					}
 				}
 			}
 		});
+	}
+
+	@Override
+	public void onLoadingFinished() {
+		if(reposAdapter != null) {
+			reposAdapter.removeProgressFooter();
+		}
 	}
 }
