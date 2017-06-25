@@ -13,9 +13,9 @@ import example.com.paycoinqtest.PaycoinqApp;
 import example.com.paycoinqtest.PreferencesManager;
 import example.com.paycoinqtest.R;
 import example.com.paycoinqtest.activity.MainActivity;
-import example.com.paycoinqtest.data.ReposLiveData;
 import example.com.paycoinqtest.api.ApiManager;
 import example.com.paycoinqtest.data.RepoInfo;
+import example.com.paycoinqtest.data.ReposLiveData;
 import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,7 +60,6 @@ public class ReposViewModel extends AndroidViewModel {
 		@Override
 		public void onResponse(Call<List<RepoInfo>> call, Response<List<RepoInfo>> response) {
 			loading = false;
-			allDataLoaded = LAST_LOADED_PAGE > 2; //TODO remove
 			List<RepoInfo> items = response.body();
 			if (items == null || items.isEmpty()) {
 				Toast.makeText(getApplication(), "No more data to load", Toast.LENGTH_SHORT).show();
@@ -73,7 +72,7 @@ public class ReposViewModel extends AndroidViewModel {
 				realm = Realm.getDefaultInstance();
 				realm.executeTransaction(realm1 -> realm1.insertOrUpdate(response.body()));
 			} finally {
-				if(realm != null) {
+				if (realm != null) {
 					realm.close();
 				}
 			}
