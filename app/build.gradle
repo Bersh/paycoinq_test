@@ -15,15 +15,15 @@ repositories {
 
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 27
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "example.com.paycoinqtest"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -41,8 +41,8 @@ android {
     }
 }
 
-def androidSupportVersion = "25.3.1"
-def archComponentsVersion = "1.0.0-alpha3"
+def androidSupportVersion = "27.0.2"
+def archComponentsVersion = "1.0.0"
 
 dependencies {
     compile "com.android.support:appcompat-v7:${androidSupportVersion}"
