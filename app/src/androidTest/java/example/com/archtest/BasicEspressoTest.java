@@ -1,4 +1,4 @@
-package example.com.paycoinqtest;
+package example.com.archtest;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
@@ -12,9 +12,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import example.com.paycoinqtest.activity.MainActivity;
-import example.com.paycoinqtest.api.ApiManager;
-import example.com.paycoinqtest.util.RecyclerViewItemCountAssertion;
+import example.com.archtest.activity.MainActivity;
+import example.com.archtest.api.ApiManager;
+import example.com.archtest.util.RecyclerViewItemCountAssertion;
 import io.realm.Realm;
 
 import static android.support.test.espresso.Espresso.onView;

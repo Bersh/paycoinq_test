@@ -1,15 +1,14 @@
-package example.com.paycoinqtest;
+package example.com.archtest;
 
 
 import android.app.Application;
 
-import example.com.paycoinqtest.api.ApiManager;
-import io.realm.Realm;
+import example.com.archtest.api.ApiManager;
 
-public class PaycoinqApp extends Application {
+public class App extends Application {
 	private ApiManager apiManager;
 
-	public PaycoinqApp() {
+	public App() {
 		apiManager = new ApiManager();
 	}
 

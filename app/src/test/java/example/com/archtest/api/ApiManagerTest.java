@@ -1,11 +1,11 @@
-package example.com.paycoinqtest.api;
+package example.com.archtest.api;
 
 import org.easymock.Capture;
 import org.junit.Test;
 
 import java.util.List;
 
-import example.com.paycoinqtest.data.RepoInfo;
+import example.com.archtest.data.RepoInfo;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Protocol;

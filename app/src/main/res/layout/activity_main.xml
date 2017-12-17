@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="example.com.paycoinqtest.activity.MainActivity">
+    tools:context="example.com.archtest.activity.MainActivity">
 
 
     <android.support.v7.widget.RecyclerView

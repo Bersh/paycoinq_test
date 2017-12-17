@@ -1,4 +1,4 @@
-package example.com.paycoinqtest.activity;
+package example.com.archtest.activity;
 
 import android.arch.lifecycle.LifecycleActivity;
 import android.arch.lifecycle.ViewModelProviders;
@@ -11,10 +11,10 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import example.com.paycoinqtest.R;
-import example.com.paycoinqtest.adapter.ReposAdapter;
-import example.com.paycoinqtest.data.RepoInfo;
-import example.com.paycoinqtest.viewmodel.ReposViewModel;
+import example.com.archtest.R;
+import example.com.archtest.adapter.ReposAdapter;
+import example.com.archtest.data.RepoInfo;
+import example.com.archtest.viewmodel.ReposViewModel;
 
 public class MainActivity extends LifecycleActivity implements ReposViewModel.LoadingFinishedListener {
 	private static final int LOAD_MORE_TRESHOLD = 3;

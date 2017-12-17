@@ -1,4 +1,4 @@
-package example.com.paycoinqtest.adapter;
+package example.com.archtest.adapter;
 
 
 import android.support.annotation.NonNull;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import example.com.paycoinqtest.R;
-import example.com.paycoinqtest.data.RepoInfo;
+import example.com.archtest.R;
+import example.com.archtest.data.RepoInfo;
 
 public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	//item types

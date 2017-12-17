@@ -1,4 +1,4 @@
-package example.com.paycoinqtest.viewmodel;
+package example.com.archtest.viewmodel;
 
 
 import android.app.Application;
@@ -10,13 +10,13 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import example.com.paycoinqtest.PaycoinqApp;
-import example.com.paycoinqtest.PreferencesManager;
-import example.com.paycoinqtest.R;
-import example.com.paycoinqtest.activity.MainActivity;
-import example.com.paycoinqtest.api.ApiManager;
-import example.com.paycoinqtest.data.RepoInfo;
-import example.com.paycoinqtest.data.ReposLiveData;
+import example.com.archtest.App;
+import example.com.archtest.PreferencesManager;
+import example.com.archtest.R;
+import example.com.archtest.activity.MainActivity;
+import example.com.archtest.api.ApiManager;
+import example.com.archtest.data.RepoInfo;
+import example.com.archtest.data.ReposLiveData;
 import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +33,7 @@ public class ReposViewModel extends AndroidViewModel {
 	public ReposViewModel(Application application) {
 		super(application);
 		data = new ReposLiveData(application);
-		apiManager = ((PaycoinqApp) application).getApiManager();
+		apiManager = ((App) application).getApiManager();
 		LAST_LOADED_PAGE = PreferencesManager.getLoadedPage(application);
 	}
 

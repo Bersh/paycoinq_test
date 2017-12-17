@@ -1,13 +1,13 @@
-package example.com.paycoinqtest.api;
+package example.com.archtest.api;
 
 import java.util.List;
 
-import example.com.paycoinqtest.data.RepoInfo;
+import example.com.archtest.data.RepoInfo;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-import static example.com.paycoinqtest.Constants.API.REPOS_LIST_URL;
+import static example.com.archtest.Constants.API.REPOS_LIST_URL;
 
 interface GitHubApi {
 

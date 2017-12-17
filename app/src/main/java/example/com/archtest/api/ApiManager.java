@@ -1,10 +1,10 @@
-package example.com.paycoinqtest.api;
+package example.com.archtest.api;
 
 import java.io.IOException;
 import java.util.List;
 
-import example.com.paycoinqtest.Constants;
-import example.com.paycoinqtest.data.RepoInfo;
+import example.com.archtest.Constants;
+import example.com.archtest.data.RepoInfo;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Callback;

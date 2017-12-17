@@ -1,4 +1,4 @@
-package example.com.paycoinqtest;
+package example.com.archtest;
 
 public abstract class Constants {
 	public static final class API {

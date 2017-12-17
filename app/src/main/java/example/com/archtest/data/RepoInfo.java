@@ -1,4 +1,4 @@
-package example.com.paycoinqtest.data;
+package example.com.archtest.data;
 
 
 import io.realm.RealmObject;

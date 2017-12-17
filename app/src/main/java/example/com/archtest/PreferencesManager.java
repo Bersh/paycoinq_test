@@ -1,4 +1,4 @@
-package example.com.paycoinqtest;
+package example.com.archtest;
 
 import android.content.Context;
 import android.content.SharedPreferences;

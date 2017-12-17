@@ -1,4 +1,4 @@
-package example.com.paycoinqtest.util;
+package example.com.archtest.util;
 
 import android.support.test.espresso.PerformException;
 import android.support.test.espresso.UiController;
