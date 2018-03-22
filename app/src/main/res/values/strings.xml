@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PaycoinqTest</string>
+    <string name="app_name">AndroidArchitectureTest</string>
 
     <string name="page_loaded">Page %1$d loaded</string>
     <string name="all_data_loaded">No more data to load</string>

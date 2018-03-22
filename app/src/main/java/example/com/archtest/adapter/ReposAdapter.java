@@ -26,9 +26,10 @@ public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 		this.data = data;
 	}
 
+	@NonNull
 	@Override
-	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		RecyclerView.ViewHolder viewHolder = null;
+	public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		RecyclerView.ViewHolder viewHolder;
 
 		switch (viewType) {
 			case ITEM:
@@ -38,6 +39,7 @@ public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 				viewHolder = createFooterViewHolder(parent);
 				break;
 			default:
+				viewHolder = createItemViewHolder(parent);
 				break;
 		}
 
@@ -47,7 +49,7 @@ public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 	private ItemViewHolder createItemViewHolder(ViewGroup parent) {
 		View view = LayoutInflater.from(parent.getContext())
 				.inflate(R.layout.list_item, parent, false);
-		TextView txtName = (TextView) view.findViewById(R.id.txt_name);
+		TextView txtName = view.findViewById(R.id.txt_name);
 
 		return new ItemViewHolder(view, txtName);
 	}
@@ -60,7 +62,7 @@ public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 	}
 
 	@Override
-	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 		switch (getItemViewType(position)) {
 			case ITEM:
 				((ItemViewHolder) holder).txtName.setText(data.get(position).getName());
@@ -109,7 +111,7 @@ public class ReposAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 		return (position == data.size() - 1);
 	}
 
-	public void add(@NonNull RepoInfo item) {
+	private void add(@NonNull RepoInfo item) {
 		data.add(item);
 		notifyItemInserted(data.size() - 1);
 	}

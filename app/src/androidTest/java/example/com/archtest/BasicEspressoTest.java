@@ -55,7 +55,7 @@ public class BasicEspressoTest {
 
 
 	/**
-	 * Will wait until given recycler view has example.com.paycoinqtest.api.ApiManager#ITEMS_PER_PAGE items
+	 * Will wait until given recycler view has {@link example.com.archtest.api.ApiManager#ITEMS_PER_PAGE} items
 	 */
 	private class RecyclerItemsCountIdlingResource implements IdlingResource {
 		private RecyclerView.Adapter adapter;

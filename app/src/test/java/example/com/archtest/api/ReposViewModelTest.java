@@ -5,7 +5,7 @@ import example.com.archtest.viewmodel.ReposViewModel;
 
 public class ReposViewModelTest {
 
-    public void dataLoadTest(){
+/*    public void dataLoadTest(){
         ReposViewModel reposViewModel = new ReposViewModel();
-    }
+    }*/
 }
