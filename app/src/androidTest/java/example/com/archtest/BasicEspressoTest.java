@@ -48,7 +48,7 @@ public class BasicEspressoTest {
 
 	@Test
 	public void checkFirstPageLoaded() throws Exception {
-		RecyclerView recyclerView = (RecyclerView) activityRule.getActivity().findViewById(R.id.repos_recycler);
+		RecyclerView recyclerView = activityRule.getActivity().findViewById(R.id.repos_recycler);
 		Espresso.registerIdlingResources(new RecyclerItemsCountIdlingResource(recyclerView));
 		onView(withId(R.id.repos_recycler)).check(new RecyclerViewItemCountAssertion(ApiManager.ITEMS_PER_PAGE));
 	}

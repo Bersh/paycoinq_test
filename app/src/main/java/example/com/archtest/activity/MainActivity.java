@@ -82,10 +82,6 @@ public class MainActivity extends AppCompatActivity implements LoadingListener {
 					progressBar.setVisibility(View.GONE);
 				}
 			}
-
-			int loadedPageNumber = model.getLastLoadedPage();
-			String pageLoadedMessage = getApplication().getResources().getString(R.string.page_loaded, loadedPageNumber);
-			Toast.makeText(getApplication(), pageLoadedMessage, Toast.LENGTH_SHORT).show();
 		});
 	}
 
@@ -101,5 +97,10 @@ public class MainActivity extends AppCompatActivity implements LoadingListener {
 			reposAdapter.removeProgressFooter();
 		}
 		Toast.makeText(getApplication(), R.string.all_data_loaded, Toast.LENGTH_SHORT).show();
+	}
+
+	public void onPageLoaded(int pageNumber) {
+		String pageLoadedMessage = getApplication().getResources().getString(R.string.page_loaded, pageNumber);
+		Toast.makeText(getApplication(), pageLoadedMessage, Toast.LENGTH_SHORT).show();
 	}
 }

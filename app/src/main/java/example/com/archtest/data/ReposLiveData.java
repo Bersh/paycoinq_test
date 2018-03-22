@@ -61,8 +61,8 @@ public class ReposLiveData extends LiveData<List<RepoInfo>> {
 
 	public void loadNextPage(@Nullable LoadingListener listener) {
 		if (!allDataLoaded) {
-			apiManager.getReposPage(++LAST_LOADED_PAGE, new DataCallback(listener));
 			loading = true;
+			apiManager.getReposPage(++LAST_LOADED_PAGE, new DataCallback(listener));
 		}
 	}
 
@@ -112,6 +112,9 @@ public class ReposLiveData extends LiveData<List<RepoInfo>> {
 				}
 			}
 			PreferencesManager.saveLoadedPage(context, LAST_LOADED_PAGE);
+			if (listener != null) {
+				listener.onPageLoaded(LAST_LOADED_PAGE);
+			}
 		}
 
 		@Override
