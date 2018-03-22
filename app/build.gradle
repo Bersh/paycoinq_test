@@ -1,10 +1,13 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
+        google()
     }
 
     dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.6.1'
+        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
+        classpath "io.realm:realm-gradle-plugin:5.0.0"
     }
 }
 
@@ -41,14 +44,14 @@ android {
     }
 }
 
-def androidSupportVersion = "27.0.2"
-def archComponentsVersion = "1.0.0"
+def androidSupportVersion = "27.1.0"
+def archComponentsVersion = "1.1.1"
 
 dependencies {
     compile "com.android.support:appcompat-v7:${androidSupportVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     compile "com.android.support:cardview-v7:${androidSupportVersion}"
@@ -60,7 +63,7 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:${archComponentsVersion}"
 
     testCompile 'junit:junit:4.12'
-    testCompile "org.robolectric:robolectric:3.3.2"
+    testCompile "org.robolectric:robolectric:3.5"
     testCompile group: 'org.easymock', name: 'easymock', version: '3.1'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
