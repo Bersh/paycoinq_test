@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements LoadingListener {
 		});
 	}
 
+	@Override
 	public void onLoadError(String message) {
 		if (reposAdapter != null) {
 			reposAdapter.removeProgressFooter();
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements LoadingListener {
 		Toast.makeText(getApplication(), message, Toast.LENGTH_LONG).show();
 	}
 
+	@Override
 	public void onAllDataLoaded() {
 		if (reposAdapter != null) {
 			reposAdapter.removeProgressFooter();
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements LoadingListener {
 		Toast.makeText(getApplication(), R.string.all_data_loaded, Toast.LENGTH_SHORT).show();
 	}
 
+	@Override
 	public void onPageLoaded(int pageNumber) {
 		String pageLoadedMessage = getApplication().getResources().getString(R.string.page_loaded, pageNumber);
 		Toast.makeText(getApplication(), pageLoadedMessage, Toast.LENGTH_SHORT).show();
