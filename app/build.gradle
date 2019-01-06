@@ -45,7 +45,7 @@ android {
     }
 }
 
-def androidSupportVersion = "27.1.0"
+def androidSupportVersion = "27.1.1"
 def archComponentsVersion = "1.1.1"
 
 dependencies {
@@ -61,6 +61,7 @@ dependencies {
 
     compile "android.arch.lifecycle:runtime:${archComponentsVersion}"
     compile "android.arch.lifecycle:extensions:${archComponentsVersion}"
+    implementation "android.arch.paging:runtime:1.0.1"
     annotationProcessor "android.arch.lifecycle:compiler:${archComponentsVersion}"
 
     testCompile 'junit:junit:4.12'

@@ -2,6 +2,7 @@ package example.com.archtest.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import example.com.archtest.R
 import example.com.archtest.adapter.ReposAdapter
+import example.com.archtest.adapter.ReposAdapterNew
 import example.com.archtest.api.LoadingListener
 import example.com.archtest.data.RepoInfo
 import example.com.archtest.viewmodel.ReposViewModel
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity(), LoadingListener {
     private val LOAD_MORE_THRESHOLD = 3
 
     private lateinit var progressBar: ProgressBar
-    private lateinit var reposAdapter: ReposAdapter
+    private lateinit var reposAdapter: ReposAdapterNew
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var model: ReposViewModel
 
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity(), LoadingListener {
 
         model = ViewModelProviders.of(this).get(ReposViewModel::class.java)
 
-        subscribeOnDataUpdates()
+//        subscribeOnDataUpdates()
         setupRecyclerView()
     }
 
@@ -41,46 +43,25 @@ class MainActivity : AppCompatActivity(), LoadingListener {
         layoutManager = LinearLayoutManager(this)
         recyclerRepos.layoutManager = layoutManager
 
-        val dataFromDb : MutableList<RepoInfo> = model.data.value ?: ArrayList()
+/*        val dataFromDb : MutableList<RepoInfo> = model.data.value ?: ArrayList()
         if (dataFromDb.isEmpty()) {
             model.loadNextPage(this)
-        }
-        reposAdapter = ReposAdapter(dataFromDb)
+        }*/
+        reposAdapter = ReposAdapterNew()
         recyclerRepos.adapter = reposAdapter
+        model.reposLiveData?.observe(this,
+                Observer<PagedList<RepoInfo>> { t ->
+                    reposAdapter.submitList(t)
+                    progressBar.visibility = View.GONE
+                })
 
-        recyclerRepos.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0 && !model.isLoading() && !model.isAllDataLoaded()) { //scroll down and not already loading
-                    val totalItemCount = layoutManager.itemCount
-                    val lastItem = layoutManager.findLastVisibleItemPosition()
-                    if (lastItem >= totalItemCount - LOAD_MORE_THRESHOLD) {
-                        model.loadNextPage(this@MainActivity)
-                        reposAdapter.addProgressFooter()
-                    }
-                }
-            }
-        })
-    }
-
-    private fun subscribeOnDataUpdates() {
-        model.data.observe(this, Observer<MutableList<RepoInfo>> { data ->
-            reposAdapter.removeProgressFooter()
-            data?.let {
-                reposAdapter.setData(data)
-                reposAdapter.removeProgressFooter()
-                progressBar.visibility = View.GONE
-            }
-        })
     }
 
     override fun onLoadError(message: String) {
-        reposAdapter.removeProgressFooter()
         Toast.makeText(application, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onAllDataLoaded() {
-        reposAdapter.removeProgressFooter()
         Toast.makeText(application, R.string.all_data_loaded, Toast.LENGTH_SHORT).show()
     }
 

@@ -52,6 +52,10 @@ class ApiManager() {
         gitHubApi.getWeatherInfo(pageNumber, ITEMS_PER_PAGE).enqueue(callback)
     }
 
+    fun getReposPage(pageNumber: Int, itemsPerPage: Int, callback: Callback<List<RepoInfo>>) {
+        gitHubApi.getWeatherInfo(pageNumber, itemsPerPage).enqueue(callback)
+    }
+
     @Throws(IOException::class)
     fun getReposPage(pageNumber: Int): Response<List<RepoInfo>> {
         return gitHubApi.getWeatherInfo(pageNumber, ITEMS_PER_PAGE).execute()
