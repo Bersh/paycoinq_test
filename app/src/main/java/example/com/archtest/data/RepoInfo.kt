@@ -4,6 +4,4 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
 
-open class RepoInfo(@PrimaryKey var id: Int = 0, @Required var name: String = "") : RealmObject() {
-
-}
+open class RepoInfo(@PrimaryKey var id: Int = 0, @Required var name: String = "") : RealmObject()

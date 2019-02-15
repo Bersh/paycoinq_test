@@ -4,13 +4,12 @@ import android.arch.paging.DataSource
 import android.arch.lifecycle.MutableLiveData
 
 
-
-class ReposDataFactory : DataSource.Factory<Int, RepoInfo>() {
-    private val mutableLiveData: MutableLiveData<ReposDataSource> = MutableLiveData()
-    lateinit var reposDataSource: ReposDataSource
+class ReposDataFactory() : DataSource.Factory<Int, RepoInfo>() {
+    private val mutableLiveData: MutableLiveData<DataRepository> = MutableLiveData()
+    lateinit var reposDataSource: DataRepository
 
     override fun create(): DataSource<Int, RepoInfo> {
-        reposDataSource = ReposDataSource()
+        reposDataSource = DataRepository()
         mutableLiveData.postValue(reposDataSource)
         return reposDataSource
     }

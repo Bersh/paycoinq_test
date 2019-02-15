@@ -14,8 +14,10 @@ import example.com.archtest.R
 import example.com.archtest.adapter.ReposAdapter
 import example.com.archtest.adapter.ReposAdapterNew
 import example.com.archtest.api.LoadingListener
+import example.com.archtest.data.LoadingState
 import example.com.archtest.data.RepoInfo
 import example.com.archtest.viewmodel.ReposViewModel
+import io.realm.Realm
 import java.util.ArrayList
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,10 +33,10 @@ class MainActivity : AppCompatActivity(), LoadingListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         progressBar = progress_bar
+        Realm.init(this)
 
         model = ViewModelProviders.of(this).get(ReposViewModel::class.java)
 
-//        subscribeOnDataUpdates()
         setupRecyclerView()
     }
 
@@ -43,17 +45,22 @@ class MainActivity : AppCompatActivity(), LoadingListener {
         layoutManager = LinearLayoutManager(this)
         recyclerRepos.layoutManager = layoutManager
 
-/*        val dataFromDb : MutableList<RepoInfo> = model.data.value ?: ArrayList()
-        if (dataFromDb.isEmpty()) {
-            model.loadNextPage(this)
-        }*/
         reposAdapter = ReposAdapterNew()
         recyclerRepos.adapter = reposAdapter
-        model.reposLiveData?.observe(this,
+        model.reposLiveData.observe(this,
                 Observer<PagedList<RepoInfo>> { t ->
                     reposAdapter.submitList(t)
                     progressBar.visibility = View.GONE
                 })
+
+        model.loadingState.observe(this, Observer<LoadingState> {
+            when(it) {
+                LoadingState.LOADING -> {}
+                LoadingState.LOAD_FINISHED -> onPageLoaded(1)
+                LoadingState.ALL_DATA_LOADED -> onAllDataLoaded()
+                LoadingState.ERROR -> onLoadError("aaa")
+            }
+        })
 
     }
 
